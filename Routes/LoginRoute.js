@@ -1,5 +1,5 @@
 import express from "express";
-import Login from '../Model/Login.js'
+import Login from "../Model/Login.js";
 
 const router = express.Router();
 
@@ -9,20 +9,25 @@ router.post("/login", async (req, res) => {
         const { email, password } = req.body;
 
         const user = await Login.findOne({ email });
-        if (!user) return res.status(400).json({ message: "Invalid emailss or password" });
 
-        else if (!password == user.password) {
-            return res.status(400).json({ message: "Invalid email22 or password" });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid email or password" });
         }
+
+        if (password !== user.password) { 
+            return res.status(400).json({ message: "Invalid password" });
+        }
+
         const token = user.generateAuthToken();
-        res.json({
+        res.status(200).json({
             message: "Login successful",
-            token:token
+            token: token
         });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error" });
     }
 });
 
-export default router;  
+export default router;

@@ -4,11 +4,14 @@ import dotenv from 'dotenv';
 import userRoutes from './Routes/UserRoute.js';
 import loginRoute from './Routes/LoginRoute.js'
 import taskRoute from './Routes/TaskRoute.js'
+import cors from 'cors'
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+app.use(cors());
 
 // Connect to MongoDB
 mongoose
