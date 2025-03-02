@@ -1,5 +1,6 @@
 import express from "express";
 import Login from "../Model/Login.js";
+import authMiddleware from "../Middleware/AuthMiddleware.js";
 
 const router = express.Router();
 
@@ -25,9 +26,14 @@ router.post("/login", async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Server error" });
     }
 });
+
+
+router.post('/logout', authMiddleware, (req, res) => {
+    res.status(200).json({ message: "Logged out successfully" });
+});
+
 
 export default router;

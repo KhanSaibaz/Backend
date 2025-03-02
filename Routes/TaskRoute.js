@@ -17,14 +17,11 @@ router.get('/getTasks', authMiddleware, async (req, res) => {
 
 // POST - Add a new task (Protected Route)
 router.post('/addTasks', authMiddleware, async (req, res) => {
-    console.log("reach", req.body);
-    
     try {
         const newTask = new Task(req.body);
         await newTask.save();
         res.status(201).json({ message: 'Task added successfully' });
     } catch (error) {
-        console.error("Task Creation Error:", error); // Actual error print hoga
         res.status(500).json({ message: "Error creating task", error: error.message });
     }
 });
